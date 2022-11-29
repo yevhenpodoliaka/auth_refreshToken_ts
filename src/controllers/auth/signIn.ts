@@ -16,12 +16,13 @@ const signIn = async (req: Request, res: Response) => {
     throw RequestError(401, "Password wrong");
   }
 
-  const token = createToken(user._id);
-  await User.findOneAndUpdate(user._id, { token });
+  const {accessToken,refreshToken} = createToken(user._id);
+  await User.findOneAndUpdate(user._id, { accessToken,refreshToken });
 
   res.json({
     email: user.email,
-    token,
+    accessToken,
+    refreshToken,
   });
 };
 

@@ -33,7 +33,7 @@ const auth = async (
     if (!user) {
       next(RequestError(401, "User not found"));
     }
-    if (!user?.token) {
+    if (!user?.accessToken) {
       next(RequestError(401, "Token expired"));
     }
     req.user = user;

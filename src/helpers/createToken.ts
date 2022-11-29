@@ -4,12 +4,12 @@ import { ObjectId } from "mongoose";
 dotenv.config()
 const { SECRET_KEY="" } = process.env
 
-const createToken = (_id:ObjectId) => {
+const createToken = (_id: ObjectId) => {
     const payload = {
-        id:_id
+        id: _id
     }
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "10m" })
-    return token
+    const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "15m" })
+    const refreshToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "1w" })
+    return { accessToken, refreshToken }
 }
-
 export default createToken

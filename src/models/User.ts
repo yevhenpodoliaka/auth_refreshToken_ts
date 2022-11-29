@@ -5,7 +5,9 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  token: string;
+  accessToken: string;
+  refreshToken:string
+
 }
 const userSchema = new Schema<IUser>({
   name: {
@@ -23,9 +25,13 @@ const userSchema = new Schema<IUser>({
       required: [true, "Email is required"],
       unique: true,
     },
-    token: {
+   accessToken : {
       type: String,
-      default: null,
+      default: "",
+  },
+      refreshToken : {
+      type: String,
+      default: "",
     },
 
   },
@@ -44,5 +50,8 @@ export const joiSignInSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
+});
+export const refreshSchema = Joi.object({
+    refreshToken: Joi.string().required(),
 });
 export const User = model<IUser>("user", userSchema);
