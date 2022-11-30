@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { User, IUser } from "../../models/User";
-import { RequestError, createToken } from "../../helpers";
+import { RequestError, createTokens } from "../../helpers";
 import { ObjectId } from "mongoose";
 
 const signIn = async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ const signIn = async (req: Request, res: Response) => {
     throw RequestError(401, "Password wrong");
   }
 
-  const {accessToken,refreshToken} = createToken(user._id);
+  const {accessToken,refreshToken} = createTokens(user._id);
   await User.findOneAndUpdate(user._id, { accessToken,refreshToken });
 
   res.json({

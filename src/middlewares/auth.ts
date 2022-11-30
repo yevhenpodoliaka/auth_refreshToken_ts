@@ -7,7 +7,7 @@ import { ObjectId } from "mongoose";
 
 dotenv.config();
 
-const { SECRET_KEY = "" } = process.env;
+const { SECRET_KEY_ACCESS = "" } = process.env;
 
 export interface IPayload extends JwtPayload {
   id?: ObjectId;
@@ -28,7 +28,7 @@ const auth = async (
     next(error);
   }
   try {
-    const { id } = jwt.verify(token, SECRET_KEY) as IPayload;
+    const { id } = jwt.verify(token, SECRET_KEY_ACCESS) as IPayload;
     const user: IUser | null = await User.findById(id);
     if (!user) {
       next(RequestError(401, "User not found"));

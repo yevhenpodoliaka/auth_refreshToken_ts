@@ -1,2 +1,2 @@
 export { default as RequestError } from "./RequestError"
-export {default as createToken} from "./createToken"
+export {default as createTokens} from "./createTokens"
