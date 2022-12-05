@@ -12,7 +12,8 @@ const signIn = async (req: Request, res: Response) => {
   if (!user) {
     throw RequestError(404, `User with email ${email} is not defined`);
   }
-  if (!bcrypt.compare(password, user.password)) {
+   const passwordCompare = await bcrypt.compare(password, user.password)
+  if (!passwordCompare) {
     throw RequestError(401, "Password wrong");
   }
 
